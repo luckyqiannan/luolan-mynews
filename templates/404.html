@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}页面未找到 - 每日资讯精选{% endblock %}
+
+{% block content %}
+    <div class="article-card">
+        <h1 class="article-title">404 - 页面未找到</h1>
+        <div class="article-content">
+            <p>您请求的页面不存在或已被移除。</p>
+            <p>可能的原因：</p>
+            <ul>
+                <li>URL输入错误</li>
+                <li>该文章已被删除</li>
+                <li>飞书多维表格中的数据已更新</li>
+            </ul>
+        </div>
+        <a href="{{ url_for('index') }}" class="read-more">返回首页</a>
+    </div>
+{% endblock %}

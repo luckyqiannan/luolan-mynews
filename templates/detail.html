@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} - 每日资讯精选{% endblock %}
+
+{% block content %}
+    <div class="article-card">
+        <h1 class="article-title">{{ article.title }}</h1>
+        {% if article.quote %}
+            <div class="article-quote">{{ article.quote }}</div>
+        {% endif %}
+        {% if article.comment %}
+            <div class="article-comment">{{ article.comment }}</div>
+        {% endif %}
+        <div class="article-content">
+            {{ article.content }}
+        </div>
+        <div class="article-actions">
+            <a href="{{ url_for('index') }}" class="read-more">返回首页</a>
+            {% if article.original_url %}
+                <a href="{{ article.original_url }}" class="read-original" target="_blank">查看原文</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

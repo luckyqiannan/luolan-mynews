@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}每日资讯{% endblock %}</title>
+    <style>
+        :root {
+            --apple-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --china-red: #de2910;
+            --light-red: #ffebe9;
+            --dark-gray: #333333;
+            --light-gray: #f5f5f7;
+            --medium-gray: #86868b;
+        }
+        
+        body {
+            font-family: var(--apple-font);
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--china-red);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 28px;
+        }
+        
+        .article-card {
+            background-color: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-title {
+            color: var(--dark-gray);
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .article-quote {
+            font-weight: bold;
+            color: var(--china-red);
+            margin-bottom: 10px;
+            font-size: 16px;
+            line-height: 1.4;
+            padding-left: 10px;
+            border-left: 3px solid var(--china-red);
+        }
+        
+        .article-comment {
+            color: var(--medium-gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .article-preview {
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+        
+        .read-more {
+            display: inline-block;
+            color: var(--china-red);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 5px 0;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+        
+        .read-more:hover {
+            border-bottom-color: var(--china-red);
+        }
+        
+        .read-original {
+            display: inline-block;
+            color: white;
+            background-color: var(--china-red);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 5px 15px;
+            border-radius: 4px;
+            margin-left: 15px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .read-original:hover {
+            background-color: #b62007;
+        }
+        
+        .article-actions {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .article-content {
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            color: var(--medium-gray);
+            font-size: 14px;
+            margin-top: 40px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            header h1 {
+                font-size: 24px;
+            }
+            
+            .article-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>每日资讯精选</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© {{ now.year }} 每日资讯精选 | 基于飞书多维表格的个人博客</p>
+        </div>
+    </footer>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>
