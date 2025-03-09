@@ -13,9 +13,6 @@
                 {% if article.comment %}
                     <div class="article-comment">{{ article.comment }}</div>
                 {% endif %}
-                <div class="article-preview">
-                    {{ article.content[:100] }}{% if article.content|length > 100 %}...{% endif %}
-                </div>
                 {% if article.original_url %}
                     <a href="{{ article.original_url }}" class="read-more" target="_blank" rel="noopener noreferrer" onclick="window.open('{{ article.original_url }}', '_blank'); return false;">阅读全文</a>
                     <div style="margin-top: 5px; font-size: 12px; color: #666;">链接: {{ article.original_url }}</div>

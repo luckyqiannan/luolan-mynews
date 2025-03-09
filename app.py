@@ -73,10 +73,69 @@ def try_get_bitable_data(token):
             elif original_url and isinstance(original_url, dict) and 'link' in original_url:
                 original_url = original_url.get('link', '')
             
+            # 处理金句字段，提取text内容
+            quote = fields.get('金句在这里', '')
+            print(f"原始金句数据: {quote}")
+            print(f"原始金句类型: {type(quote)}")
+            
+            # 处理各种可能的格式，包括字符串、字典、列表等
+            if quote:
+                # 如果是字符串，但看起来包含JSON/字典格式
+                if isinstance(quote, str) and ('{' in quote or '[' in quote):
+                    print(f"处理字符串格式金句: {quote}")
+                    try:
+                        import ast
+                        import json
+                        # 尝试多种方式解析
+                        try:
+                            # 尝试作为JSON解析
+                            parsed = json.loads(quote.replace("'", "\""))
+                            print(f"JSON解析结果: {parsed}")
+                        except Exception as e:
+                            print(f"JSON解析失败: {str(e)}")
+                            # 尝试作为字典字符串解析
+                            parsed = ast.literal_eval(quote.replace("'", "\""))
+                            print(f"AST解析结果: {parsed}")
+                        
+                        # 解析成功后，根据类型处理
+                        if isinstance(parsed, dict) and 'text' in parsed:
+                            # 单个字典，直接提取text
+                            quote = parsed.get('text', '')
+                            print(f"从字典提取text: {quote}")
+                        elif isinstance(parsed, list):
+                            # 列表情况，尝试从各项中提取text
+                            print(f"处理列表格式: {parsed}")
+                            texts = []
+                            for item in parsed:
+                                if isinstance(item, dict) and 'text' in item:
+                                    texts.append(item.get('text', ''))
+                            if texts:
+                                quote = ' '.join(texts)
+                                print(f"从列表提取text: {quote}")
+                    except Exception as e:
+                        print(f"解析金句失败: {str(e)}")
+                # 如果直接是字典
+                elif isinstance(quote, dict) and 'text' in quote:
+                    print(f"处理字典格式金句: {quote}")
+                    quote = quote.get('text', '')
+                    print(f"提取的text: {quote}")
+                # 如果直接是列表
+                elif isinstance(quote, list):
+                    print(f"处理列表格式金句: {quote}")
+                    texts = []
+                    for item in quote:
+                        if isinstance(item, dict) and 'text' in item:
+                            texts.append(item.get('text', ''))
+                    if texts:
+                        quote = ' '.join(texts)
+                        print(f"最终提取的text: {quote}")
+            
+            print(f"处理后的金句: {quote}")
+            
             item = {
                 'id': record.get('record_id'),
                 'title': fields.get('标题', ''),
-                'quote': fields.get('金句在这里', ''),
+                'quote': quote,
                 'comment': fields.get('黄叔点评', ''),  # 如果这个字段存在的话
                 'content': fields.get('概要内容在这里', '') or fields.get('全文内容提取', ''),
                 'original_url': original_url
